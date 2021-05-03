@@ -2,8 +2,10 @@ import { useState, useLayoutEffect, useRef } from 'react'
 import './App.css'
 
 function App() {
-  const [text, setText] = useState('')
-  const [width, setWidth] = useState(100)
+  const [{ text, width }, setState] = useState({
+    text: localStorage.getItem('text') || '',
+    width: localStorage.getItem('width') || '100',
+  })
   const [minFontSize, setMinFontSize] = useState(10)
   const maxFontSize = 40
 
@@ -31,6 +33,14 @@ function App() {
   const currentFontSize = parseFloat(fontSize)
   const ratio = (refWidth / spanRefWidth) * currentFontSize
 
+  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { value, name } = e.target
+    localStorage.setItem(name, value)
+    setState((prevState) => {
+      return { ...prevState, [name]: value }
+    })
+  }
+
   return (
     <>
       <div className="app">
@@ -39,8 +49,9 @@ function App() {
           <input
             className="input-text"
             placeholder="Enter text"
+            name="text"
             type="text"
-            onChange={({ target: { value } }) => setText(value)}
+            onChange={onChange}
           />
         </div>
 
@@ -67,11 +78,13 @@ function App() {
           <input
             className="input-range"
             id="input-range"
+            name="width"
             type="range"
             min="100"
             max={window.innerWidth}
             step="10"
-            onChange={({ target: { value } }) => setWidth(parseInt(value))}
+            value={parseInt(width)}
+            onChange={onChange}
           />
         </div>
         <h4>Output:</h4>
