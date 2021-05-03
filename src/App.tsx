@@ -51,6 +51,7 @@ function App() {
             placeholder="Enter text"
             name="text"
             type="text"
+            value={text}
             onChange={onChange}
           />
         </div>
