@@ -57,13 +57,13 @@ function App() {
 
         <div className="inputs-wrapper">
           <label className="label" htmlFor="input-size">
-            Min. font size:
+            Min. font size: {minFontSize}px
           </label>
           <input
             className="input-size"
             id="input-size"
             placeholder="Minimum font size"
-            type="number"
+            type="range"
             min="1"
             max={maxFontSize}
             step="1"
@@ -73,7 +73,7 @@ function App() {
             }
           />
           <label className="label" htmlFor="input-range">
-            Output width:
+            Output width: {width}px
           </label>
           <input
             className="input-range"
